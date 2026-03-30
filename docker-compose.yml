@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  avito_bot:
+    build: .
+    container_name: avito_assistant
+    restart: always
+    ports:
+      # Пробрасываем порт 8000 из контейнера на 3003 порт хоста (только для localhost!)
+      - "127.0.0.1:3003:8000"
+    volumes:
+      # Монтируем локальную папку data в контейнер, чтобы SQLite не удалялась при рестарте
+      - ./data:/app/data
+    env_file:
+      - .env
