@@ -8,7 +8,8 @@ from models.chat import ChatMessage
 class GigaChatAdapter:
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=2, max=10))
     async def generate_reply(self, history: List[ChatMessage]) -> str:
-        messages =[Messages(role=MessagesRole.SYSTEM, content=settings.system_prompt)]
+        system_content = settings.get_system_prompt()
+        messages = [Messages(role=MessagesRole.SYSTEM, content=system_content)]
         
         for msg in history:
             role = MessagesRole.USER if msg.role == "user" else MessagesRole.ASSISTANT

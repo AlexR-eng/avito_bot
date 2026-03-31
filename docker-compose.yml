@@ -10,5 +10,6 @@ services:
     volumes:
       # Монтируем локальную папку data в контейнер, чтобы SQLite не удалялась при рестарте
       - ./data:/app/data
+      - ./prompts:/app/prompts
     env_file:
       - .env
