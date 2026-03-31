@@ -19,7 +19,8 @@ class GigaChatAdapter:
         async with GigaChat(
             credentials=settings.gigachat_credentials, 
             scope=settings.gigachat_scope,
-            verify_ssl_certs=settings.gigachat_verify_ssl
+            verify_ssl_certs=settings.gigachat_verify_ssl,
+            model=settings.gigachat_model
         ) as client:
             response = await client.achat(payload)
             return response.choices[0].message.content

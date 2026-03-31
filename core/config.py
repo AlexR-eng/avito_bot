@@ -8,12 +8,13 @@ class Settings(BaseSettings):
     gigachat_credentials: str
     gigachat_scope: str = "GIGACHAT_API_PERS"
     gigachat_verify_ssl: bool = False
-    
+    gigachat_model: str = "GigaChat-2"
+
     target_item_ids: str = "" 
     stub_message: str = "Здравствуйте! Я ИИ-ассистент, мои полномочия всё. Сейчас к диалогу подключится живой менеджер."
     system_prompt: str = "Ты вежливый помощник продавца на Авито. Отвечай кратко, по делу и дружелюбно."
     
-    db_url: str = "sqlite+aiosqlite:///assistant.db"
+    db_url: str = "sqlite+aiosqlite:///data/assistant.db"
     
     # Настройки сервера
     app_host: str = "127.0.0.1"
