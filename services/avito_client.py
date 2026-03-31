@@ -74,3 +74,19 @@ class AvitoAPIClient:
         
     async def close(self):
         await self._client.aclose()
+
+    @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=2, max=10))
+    async def subscribe_webhook(self, webhook_url: str) -> dict:
+        """Регистрирует URL для получения вебхуков от Авито."""
+        token = await self._ensure_token()
+        
+        logger.info(f"Регистрируем webhook URL в Авито: {webhook_url}")
+        response = await self._client.post(
+            "/messenger/v3/webhook",
+            json={"url": webhook_url},
+            headers={"Authorization": f"Bearer {token}"}
+        )
+        
+        # Если Авито вернет ошибку (например, наш сервер недоступен), скрипт упадет с понятным описанием
+        response.raise_for_status() 
+        return response.json()    
